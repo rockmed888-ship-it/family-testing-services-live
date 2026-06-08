@@ -1,6 +1,6 @@
 [build]
-  command = "corepack enable && pnpm install --frozen-lockfile && pnpm run build:netlify"
-  publish = "apps/web/dist"
+  command = "echo 'Family Testing Services — static site, no build step'"
+  publish = "family-testing-services"
 
 [build.environment]
   NODE_VERSION = "22"
