@@ -9,6 +9,7 @@ import {
   type Wwh2Feedback,
   type Wwh2Stats,
 } from "@secretlayer/shared";
+import { Wwh2FeedbackStore } from "./wwh2-store.js";
 
 const app = express();
 const port = Number(process.env.PORT ?? 8787);
@@ -41,7 +42,7 @@ const users = new Map<string, { id: string; email: string; password: string }>()
 const sessions = new Map<string, string>();
 const projects = new Map<string, { id: string; userId: string; name: string }>();
 const waitlistLeads = new Map<string, WaitlistLead>();
-const wwh2Feedback = new Map<string, Wwh2Feedback>();
+const wwh2Store = new Wwh2FeedbackStore();
 
 function auth(req: express.Request, res: express.Response, next: express.NextFunction) {
   const authHeader = req.headers.authorization;
@@ -78,7 +79,7 @@ async function buildSafetyReport(target = "https://secretlayer.net") {
 }
 
 function computeWwh2Stats(): Wwh2Stats {
-  const entries = [...wwh2Feedback.values()];
+  const entries = wwh2Store.getAll();
   const totalSessions = entries.length;
   const averageRating =
     totalSessions === 0 ? 0 : entries.reduce((sum, e) => sum + e.rating, 0) / totalSessions;
@@ -104,7 +105,7 @@ app.get("/health", (_req, res) => {
     service: "secretlayer-backend",
     version: appVersion,
     waitlistCount: waitlistLeads.size,
-    wwh2Sessions: wwh2Feedback.size,
+    wwh2Sessions: wwh2Store.size,
   });
 });
 
@@ -112,7 +113,7 @@ app.get("/wwh2/stats", publicLimiter, (_req, res) => {
   res.json({ stats: computeWwh2Stats() });
 });
 
-app.post("/wwh2/feedback", publicLimiter, (req, res) => {
+app.post("/wwh2/feedback", publicLimiter, async (req, res) => {
   const { playbookId, playbookTitle, rating, helpful, comment, completedSteps, totalSteps } = req.body ?? {};
 
   if (!playbookId || typeof playbookId !== "string") {
@@ -137,13 +138,16 @@ app.post("/wwh2/feedback", publicLimiter, (req, res) => {
     createdAt: new Date().toISOString(),
   };
 
-  wwh2Feedback.set(entry.id, entry);
-
-  res.status(201).json({
-    feedback: entry,
-    stats: computeWwh2Stats(),
-    message: "Thanks — your WWH2 rating helps other developers find guided help faster.",
-  });
+  try {
+    await wwh2Store.add(entry);
+    res.status(201).json({
+      feedback: entry,
+      stats: computeWwh2Stats(),
+      message: "Thanks — your WWH2 rating helps other developers find guided help faster.",
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to save feedback.", detail: String(err) });
+  }
 });
 
 app.get("/safety/report", publicLimiter, async (req, res) => {
@@ -269,6 +273,8 @@ app.get("/billing/plan", auth, (req, res) => {
 app.get("/vault-items", auth, (_req, res) => {
   res.json({ vaultItems: [] });
 });
+
+await wwh2Store.load();
 
 app.listen(port, () => {
   console.log(`SecretLayer API listening on http://localhost:${port}`);

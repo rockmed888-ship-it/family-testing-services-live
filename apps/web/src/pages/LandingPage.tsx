@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import type { SafetyReport } from "@secretlayer/shared";
 
 const PLANS = [
   {
@@ -32,23 +33,41 @@ const PLANS = [
 
 const TRUST_ITEMS = [
   {
+    guide: "trust-zero-knowledge",
     title: "Zero-knowledge vault model",
     detail:
       "Secret values are encrypted in the browser with a key derived from the user master password. The backend is treated as encrypted storage, not a place that can read secrets.",
   },
   {
+    guide: "trust-cloud-sync",
     title: "Encrypted cloud sync",
     detail:
       "Synced vault items are sent as encrypted envelopes with timestamps for conflict handling. The API receives ciphertext and metadata needed to store and compare records.",
   },
   {
+    guide: "trust-backup",
     title: "Backup and import custody",
     detail:
       "Backup exports contain the encrypted vault envelope. Import requires the master password before anything can be decrypted back into the local browser session.",
   },
-];
+] as const;
 
-export function LandingPage() {
+const TRUST_FAQ = [
+  {
+    q: "Can SecretLayer read customer secrets?",
+    a: "No by design. Secrets are encrypted client-side before localStorage, backup export, or cloud sync.",
+  },
+  {
+    q: "What happens if sync is offline?",
+    a: "The encrypted local vault continues to work. Sync can be retried later without sending plaintext secrets.",
+  },
+] as const;
+
+interface LandingPageProps {
+  onOpenWwh2?: () => void;
+}
+
+export function LandingPage({ onOpenWwh2 }: LandingPageProps) {
   const [masterPassword, setMasterPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [accountEmail, setAccountEmail] = useState("");
@@ -61,6 +80,9 @@ export function LandingPage() {
   const [builderWorkflow, setBuilderWorkflow] = useState(0);
   const [aiSafety, setAiSafety] = useState(0);
   const [status, setStatus] = useState<string | null>(null);
+  const [safetyReport, setSafetyReport] = useState<SafetyReport | null>(null);
+  const [safetyLoading, setSafetyLoading] = useState(false);
+  const [promotionLoading, setPromotionLoading] = useState(false);
 
   const createVault = useCallback(() => {
     if (!masterPassword || masterPassword.length < 8) {
@@ -86,6 +108,43 @@ export function LandingPage() {
     setStatus("Thanks — your review was accepted by the on-page safety check (demo). Screened reviews may appear publicly.");
     setReviewText("");
   }, [reviewName, reviewText, vaultClarity, builderWorkflow, aiSafety]);
+
+  const runSafetyScan = useCallback(async () => {
+    setSafetyLoading(true);
+    setStatus(null);
+    try {
+      const res = await fetch("/api/safety/report?target=https://secretlayer.net");
+      const data = await res.json();
+      if (data.report) {
+        setSafetyReport(data.report);
+        setStatus(`Safety: ${data.report.score}/100 — ${data.report.passed ? "cleared" : "blocked"}.`);
+      }
+    } catch {
+      setStatus("Safety scan failed — start the API with pnpm dev:api");
+    } finally {
+      setSafetyLoading(false);
+    }
+  }, []);
+
+  const runPromotionGate = useCallback(async () => {
+    setPromotionLoading(true);
+    try {
+      const res = await fetch("/api/promotion/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ target: "https://secretlayer.net", version: "0.2.0" }),
+      });
+      const data = await res.json();
+      if (data.safetyReport) setSafetyReport(data.safetyReport);
+      if (data.result) {
+        setStatus(data.result.reason);
+      }
+    } catch {
+      setStatus("Promotion check failed — is the API running?");
+    } finally {
+      setPromotionLoading(false);
+    }
+  }, []);
 
   return (
     <div className="sl-page">
@@ -197,6 +256,49 @@ export function LandingPage() {
         </div>
       </section>
 
+      <section className="sl-safety" data-guide="safety-section">
+        <h2>Safety nets</h2>
+        <p className="sl-lead-small">Run industry-calibrated checks before you ship or promote secretlayer.net.</p>
+        <div className="sl-btn-row">
+          <button
+            type="button"
+            className="sl-btn primary"
+            data-guide="safety-scan-btn"
+            onClick={runSafetyScan}
+            disabled={safetyLoading}
+          >
+            {safetyLoading ? "Scanning…" : "Run safety scan"}
+          </button>
+          <button
+            type="button"
+            className="sl-btn"
+            data-guide="promotion-gate-btn"
+            onClick={runPromotionGate}
+            disabled={promotionLoading}
+          >
+            {promotionLoading ? "Checking…" : "Promotion gate"}
+          </button>
+        </div>
+        <div className="sl-panel sl-safety-results" data-guide="safety-results">
+          {safetyReport ? (
+            <>
+              <strong className={safetyReport.passed ? "sl-pass" : "sl-fail"}>
+                Score {safetyReport.score}/100 — {safetyReport.passed ? "PASSED" : "BLOCKED"}
+              </strong>
+              <ul className="sl-safety-findings">
+                {safetyReport.findings.slice(0, 5).map((f, i) => (
+                  <li key={i}>
+                    {f.passed ? "✓" : "✗"} {f.title}
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <p className="sl-muted">Run a safety scan to see your score and top findings here.</p>
+          )}
+        </div>
+      </section>
+
       <section className="sl-reviews" data-guide="reviews-section">
         <h2>Reviews &amp; ratings</h2>
         <p className="sl-lead-small">Tell us what feels secure, clear, and worth paying for.</p>
@@ -258,10 +360,19 @@ export function LandingPage() {
         </p>
         <div className="sl-trust-grid">
           {TRUST_ITEMS.map((item) => (
-            <article key={item.title} className="sl-trust-card">
+            <article key={item.guide} className="sl-trust-card" data-guide={item.guide}>
               <h3>{item.title}</h3>
               <p>{item.detail}</p>
             </article>
+          ))}
+        </div>
+        <div className="sl-trust-faq" data-guide="trust-faq">
+          <h3>Founder-ready trust FAQ</h3>
+          {TRUST_FAQ.map((item) => (
+            <details key={item.q} className="sl-faq-item">
+              <summary>{item.q}</summary>
+              <p>{item.a}</p>
+            </details>
           ))}
         </div>
       </section>
@@ -273,6 +384,9 @@ export function LandingPage() {
       )}
 
       <footer className="sl-footer">
+        <button type="button" className="wwh2-powered-badge" onClick={onOpenWwh2} aria-label="Open WWH2 guided help">
+          Powered by WWH2
+        </button>
         <p>secretlayer.net · WWH2 guided help is free for all users</p>
       </footer>
     </div>

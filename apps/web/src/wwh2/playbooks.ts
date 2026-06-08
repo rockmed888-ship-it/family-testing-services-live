@@ -114,6 +114,77 @@ export const WWH2_PLAYBOOKS: Playbook[] = [
     ],
   },
   {
+    id: "trust-security-tour",
+    title: "Trust & Security tour",
+    description: "Understand zero-knowledge encryption, sync, and backup before you store keys.",
+    audience: "Security-conscious builders",
+    estimatedMinutes: 4,
+    steps: [
+      {
+        target: "trust-section",
+        title: "Trust & Security",
+        message:
+          "This section explains how SecretLayer protects secrets. Read it before storing API keys so you know what is encrypted and what never leaves your browser.",
+      },
+      {
+        target: "trust-zero-knowledge",
+        title: "Zero-knowledge vault",
+        message:
+          "Secrets are encrypted with a key derived from your master password. The backend only stores ciphertext — it cannot read your values.",
+      },
+      {
+        target: "trust-cloud-sync",
+        title: "Encrypted cloud sync",
+        message:
+          "Sync sends encrypted envelopes with timestamps. Conflict handling compares metadata — still no plaintext on the server.",
+      },
+      {
+        target: "trust-backup",
+        title: "Backup custody",
+        message:
+          "Exports are encrypted vault envelopes. Import always requires your master password to decrypt locally.",
+      },
+      {
+        target: "trust-faq",
+        title: "Founder FAQ",
+        message:
+          "These answers cover what happens offline, what SecretLayer can and cannot read, and what to tell customers about your security posture.",
+      },
+    ],
+  },
+  {
+    id: "run-safety-scan",
+    title: "Run a safety scan",
+    description: "Use SecretLayer safety nets to check secretlayer.net before you ship or promote.",
+    audience: "Developers shipping to production",
+    estimatedMinutes: 3,
+    steps: [
+      {
+        target: "safety-section",
+        title: "Safety nets panel",
+        message:
+          "SecretLayer runs industry-calibrated checks for leaked keys, transport security, and auth gaps. Use this before every promotion.",
+      },
+      {
+        target: "safety-scan-btn",
+        title: "Run safety scan",
+        message: "Click Run safety scan. The engine fetches headers and runs the same suite used in CI for secretlayer.net.",
+      },
+      {
+        target: "safety-results",
+        title: "Read your score",
+        message:
+          "Look for PASSED or BLOCKED, your score out of 100, and the top findings. Fix critical issues before promoting.",
+      },
+      {
+        target: "promotion-gate-btn",
+        title: "Promotion gate (optional)",
+        message:
+          "When safety clears, run Promotion gate to preview channel-ready changelog and social leads — never blind launches.",
+      },
+    ],
+  },
+  {
     id: "leave-a-review",
     title: "Leave a review & rating",
     description: "Share what feels secure, clear, and worth paying for.",

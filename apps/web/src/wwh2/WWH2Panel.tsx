@@ -7,7 +7,12 @@ import type { ActiveGuide, GuideFeedbackPayload } from "./types";
 
 type PanelView = "closed" | "launcher" | "menu" | "guide" | "feedback";
 
-export function WWH2Panel() {
+interface WWH2PanelProps {
+  /** Increment to open the help menu from elsewhere (e.g. footer badge). */
+  openMenuTrigger?: number;
+}
+
+export function WWH2Panel({ openMenuTrigger = 0 }: WWH2PanelProps) {
   const [view, setView] = useState<PanelView>("launcher");
   const [activeGuide, setActiveGuide] = useState<ActiveGuide | null>(null);
   const [stats, setStats] = useState<Wwh2Stats | null>(null);
@@ -28,6 +33,13 @@ export function WWH2Panel() {
   useEffect(() => {
     loadStats();
   }, [loadStats]);
+
+  useEffect(() => {
+    if (openMenuTrigger > 0) {
+      setView("menu");
+      setMinimized(false);
+    }
+  }, [openMenuTrigger]);
 
   function startPlaybook(playbookId: string) {
     const playbook = WWH2_PLAYBOOKS.find((p) => p.id === playbookId);
