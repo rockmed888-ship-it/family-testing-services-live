@@ -10,15 +10,27 @@ import {
   type Wwh2Stats,
 } from "@secretlayer/shared";
 import { createWwh2Store, type Wwh2FeedbackStore } from "./wwh2-store.js";
+import { mountWebApp } from "./static.js";
 
 const app = express();
+const api = express.Router();
 const port = Number(process.env.PORT ?? 8787);
 const webOrigin = process.env.WEB_ORIGIN ?? "http://localhost:5173";
 const appVersion = process.env.APP_VERSION ?? "0.2.0";
 
+const allowedOrigins = new Set([
+  webOrigin,
+  "https://secretlayer.net",
+  "https://www.secretlayer.net",
+  "http://localhost:5173",
+]);
+
 app.use(
   cors({
-    origin: webOrigin,
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.has(origin)) callback(null, true);
+      else callback(null, false);
+    },
     credentials: true,
   }),
 );
@@ -99,7 +111,7 @@ const DEFAULT_HIGHLIGHTS = [
   "WWH2 guided help — free for all users",
 ];
 
-app.get("/health", async (_req, res) => {
+api.get("/health", async (_req, res) => {
   res.json({
     ok: true,
     service: "secretlayer-backend",
@@ -110,11 +122,11 @@ app.get("/health", async (_req, res) => {
   });
 });
 
-app.get("/wwh2/stats", publicLimiter, async (_req, res) => {
+api.get("/wwh2/stats", publicLimiter, async (_req, res) => {
   res.json({ stats: await computeWwh2Stats() });
 });
 
-app.post("/wwh2/feedback", publicLimiter, async (req, res) => {
+api.post("/wwh2/feedback", publicLimiter, async (req, res) => {
   const { playbookId, playbookTitle, rating, helpful, comment, completedSteps, totalSteps } = req.body ?? {};
 
   if (!playbookId || typeof playbookId !== "string") {
@@ -151,7 +163,7 @@ app.post("/wwh2/feedback", publicLimiter, async (req, res) => {
   }
 });
 
-app.get("/safety/report", publicLimiter, async (req, res) => {
+api.get("/safety/report", publicLimiter, async (req, res) => {
   const target = (req.query.target as string) ?? "https://secretlayer.net";
   try {
     const report = await buildSafetyReport(target);
@@ -161,7 +173,7 @@ app.get("/safety/report", publicLimiter, async (req, res) => {
   }
 });
 
-app.post("/promotion/check", publicLimiter, async (req, res) => {
+api.post("/promotion/check", publicLimiter, async (req, res) => {
   const target = req.body?.target ?? "https://secretlayer.net";
   const version = req.body?.version ?? appVersion;
   const highlights = req.body?.highlights ?? DEFAULT_HIGHLIGHTS;
@@ -178,7 +190,7 @@ app.post("/promotion/check", publicLimiter, async (req, res) => {
   }
 });
 
-app.post("/leads/waitlist", publicLimiter, (req, res) => {
+api.post("/leads/waitlist", publicLimiter, (req, res) => {
   const { email, source } = req.body ?? {};
   if (!email || typeof email !== "string" || !email.includes("@")) {
     return res.status(400).json({ error: "Valid email required." });
@@ -205,11 +217,11 @@ app.post("/leads/waitlist", publicLimiter, (req, res) => {
   });
 });
 
-app.get("/leads/waitlist/count", publicLimiter, (_req, res) => {
+api.get("/leads/waitlist/count", publicLimiter, (_req, res) => {
   res.json({ count: waitlistLeads.size });
 });
 
-app.post("/auth/signup", authLimiter, (req, res) => {
+api.post("/auth/signup", authLimiter, (req, res) => {
   const { email, password } = req.body ?? {};
   if (!email || !password) return res.status(400).json({ error: "Email and password required." });
 
@@ -224,7 +236,7 @@ app.post("/auth/signup", authLimiter, (req, res) => {
   res.json({ user: { id, email }, token });
 });
 
-app.post("/auth/login", authLimiter, (req, res) => {
+api.post("/auth/login", authLimiter, (req, res) => {
   const { email, password } = req.body ?? {};
   const user = [...users.values()].find((u) => u.email === email && u.password === password);
   if (!user) return res.status(401).json({ error: "Invalid credentials." });
@@ -234,19 +246,19 @@ app.post("/auth/login", authLimiter, (req, res) => {
   res.json({ user: { id: user.id, email: user.email }, token });
 });
 
-app.post("/auth/logout", auth, (req, res) => {
+api.post("/auth/logout", auth, (req, res) => {
   const token = req.headers.authorization?.slice(7);
   if (token) sessions.delete(token);
   res.json({ ok: true });
 });
 
-app.get("/projects", auth, (req, res) => {
+api.get("/projects", auth, (req, res) => {
   const userId = (req as express.Request & { userId: string }).userId;
   const list = [...projects.values()].filter((p) => p.userId === userId);
   res.json({ projects: list });
 });
 
-app.post("/projects", auth, (req, res) => {
+api.post("/projects", auth, (req, res) => {
   const userId = (req as express.Request & { userId: string }).userId;
   const userProjects = [...projects.values()].filter((p) => p.userId === userId);
   if (userProjects.length >= FREE_PLAN_LIMITS.projects) {
@@ -261,7 +273,7 @@ app.post("/projects", auth, (req, res) => {
   res.status(201).json({ project });
 });
 
-app.get("/billing/plan", auth, (req, res) => {
+api.get("/billing/plan", auth, (req, res) => {
   const userId = (req as express.Request & { userId: string }).userId;
   const projectCount = [...projects.values()].filter((p) => p.userId === userId).length;
   res.json({
@@ -271,13 +283,18 @@ app.get("/billing/plan", auth, (req, res) => {
   });
 });
 
-app.get("/vault-items", auth, (_req, res) => {
+api.get("/vault-items", auth, (_req, res) => {
   res.json({ vaultItems: [] });
 });
+
+app.use("/api", api);
+app.use(api);
 
 wwh2Store = await createWwh2Store();
 await wwh2Store.load();
 
+const servingWeb = mountWebApp(app);
+
 app.listen(port, () => {
-  console.log(`SecretLayer API listening on http://localhost:${port}`);
+  console.log(`SecretLayer API listening on http://localhost:${port}${servingWeb ? " (web + api)" : ""}`);
 });

@@ -9,6 +9,7 @@
     "dev:web": "pnpm --filter @secretlayer/web dev",
     "dev:api": "pnpm --filter @secretlayer/api dev",
     "build:netlify": "pnpm --filter @secretlayer/web build",
+    "build:railway": "pnpm run build:netlify && pnpm --filter @secretlayer/api build",
     "build": "pnpm -r build",
     "test": "pnpm -r test",
     "lint": "pnpm -r lint",

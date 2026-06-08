@@ -1,35 +1,14 @@
-# Go live — secretlayer.net + WWH2
+# Go live — secretlayer.net + WWH2 (no Netlify payment required)
 
-Code is on `main`. Finish these two host connections once (about 10 minutes).
+The app ships as **one Railway service**: React web + Express API together. Skip Netlify if it asks you to pay.
 
-## 1. Netlify (web → secretlayer.net)
+## 1. Railway deploy (web + API)
 
-**Option A — Git integration (recommended)**
-
-1. [Netlify](https://app.netlify.com) → your secretlayer.net site → **Site configuration → Build & deploy**
-2. **Link repository** → `dustin497/SecretLayer` → branch **`main`**
-3. Build settings are read from `netlify.toml` automatically:
-   - Build: `corepack enable && pnpm install && pnpm --filter @secretlayer/web build`
-   - Publish: `apps/web/dist`
-4. **Deploy site** → confirm https://secretlayer.net shows the WWH2 launcher (bottom-right)
-
-**Option B — GitHub Actions CLI deploy**
-
-Add repository secrets:
-
-| Secret | Where to get it |
-|--------|-----------------|
-| `NETLIFY_AUTH_TOKEN` | Netlify → User settings → Applications → Personal access tokens |
-| `NETLIFY_SITE_ID` | Netlify → Site configuration → General → Site ID |
-
-Push to `main` — the **Deploy** workflow runs `netlify deploy --prod`.
-
-## 2. Railway (API → api.secretlayer.net)
-
-1. [Railway](https://railway.app) → SecretLayer API service → **Settings**
-2. Connect GitHub repo `dustin497/SecretLayer`, branch **`main`**, root uses `railway.toml`
-3. **Add Postgres** plugin → Railway injects `DATABASE_URL`
-4. **Variables** (service):
+1. [Railway](https://railway.app) → your SecretLayer service → **Settings → Source**
+2. Repo: `dustin497/SecretLayer`, branch **`main`**
+3. Railway reads `railway.toml` — builds web + API in one deploy
+4. **Add Postgres** plugin → sets `DATABASE_URL`
+5. **Variables:**
 
    ```
    WEB_ORIGIN=https://secretlayer.net
@@ -37,38 +16,50 @@ Push to `main` — the **Deploy** workflow runs `netlify deploy --prod`.
    NODE_ENV=production
    ```
 
-5. Redeploy → verify https://api.secretlayer.net/health shows `"wwh2Store":"postgres"`
+6. **Custom domains** (same service):
+   - `api.secretlayer.net` (if not already)
+   - `secretlayer.net`
+   - `www.secretlayer.net` (optional)
 
-WWH2 ratings auto-migrate from any legacy JSON file on first Postgres boot.
+7. **Deploy** → open https://secretlayer.net
 
-## 3. Smoke test after deploy
+The API serves `/api/*` and the static WWH2 site from the same host — no Netlify proxy needed.
 
-1. Open https://secretlayer.net
-2. Click **Open guided help** or footer **Powered by WWH2**
-3. Run **Trust & Security tour** → finish → submit 5-star rating
-4. Refresh → launcher should show average rating
-5. `curl https://api.secretlayer.net/wwh2/stats` → `totalSessions` ≥ 1
+## 2. Point DNS away from Netlify (free)
 
-## Verify Netlify is building this repo (not an old upload)
+At your domain registrar / Cloudflare DNS:
 
-Live HTML should include:
+| Record | Point to |
+|--------|----------|
+| `secretlayer.net` | Railway custom domain target (shown in Railway dashboard) |
+| `www` | Railway or CNAME to `secretlayer.net` |
 
-- Page title: **SecretLayer — WWH2 Guided Help**
-- Footer text: **build 0.2.0-wwh2**
-- WWH2 launcher in the bottom-right corner
+Remove old Netlify DNS records. You can cancel or pause the Netlify site — no payment required.
 
-If you still see **SecretLayer MVP** and no WWH2, the Netlify build is failing or publish directory is wrong:
+## 3. Verify WWH2 is live
 
-1. Netlify → **Deploys** → open latest deploy log on `main`
-2. Confirm **Published directory** is `apps/web/dist` (from `netlify.toml`)
-3. If build failed on `esbuild`, pull latest `main` (includes `pnpm.onlyBuiltDependencies`)
-4. **Clear cache and deploy site**
+1. https://secretlayer.net → title **SecretLayer — WWH2 Guided Help**
+2. Reviews section → **Try WWH2** button + **Rate WWH2**
+3. `curl https://api.secretlayer.net/health` → `"wwh2Store":"postgres"` (after Postgres added)
+4. `curl https://secretlayer.net/api/wwh2/stats` → stats JSON
+
+## Optional: Netlify (if you stay on free tier)
+
+Only if Netlify builds succeed without upgrading:
+
+- `netlify.toml` in repo root
+- Publish: `apps/web/dist`
+- Still need Railway for API + Postgres
+
+## Optional: GitHub Actions Netlify CLI
+
+Add secrets `NETLIFY_AUTH_TOKEN` + `NETLIFY_SITE_ID` for the **Deploy** workflow.
 
 ## Troubleshooting
 
 | Issue | Fix |
 |-------|-----|
-| WWH2 launcher missing | Netlify still on old build — check deploy logs, then **Clear cache and deploy** |
-| Ratings don’t persist | Railway missing `DATABASE_URL` — add Postgres plugin |
-| API CORS errors | Set `WEB_ORIGIN=https://secretlayer.net` on Railway |
-| `/api/*` 404 on web | Confirm `_redirects` in build output or `netlify.toml` redirects |
+| Old “SecretLayer MVP” page | DNS still on Netlify — switch to Railway domain |
+| `/api/*` 404 | Use Railway unified deploy (latest `main`), not static-only host |
+| Ratings don’t persist | Add Postgres + `DATABASE_URL` on Railway |
+| Build fails on Railway | Check deploy logs; `pnpm.onlyBuiltDependencies` includes esbuild |

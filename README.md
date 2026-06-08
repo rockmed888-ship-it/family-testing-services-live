@@ -53,10 +53,10 @@ Free on-page guided tours for secretlayer.net — spotlight highlights, 7 playbo
 
 | Surface | Host | Config |
 |---------|------|--------|
-| Web | [secretlayer.net](https://secretlayer.net) (Netlify) | `netlify.toml` |
-| API | api.secretlayer.net (Railway) | `railway.toml` |
+| Web + API (recommended) | [secretlayer.net](https://secretlayer.net) on **Railway** | `railway.toml` — one service serves WWH2 + API |
+| Web only (optional) | Netlify / Cloudflare Pages | `netlify.toml` |
 
-Push to `main` runs tests in CI. If `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` are set as GitHub secrets, the deploy workflow publishes the web app. Railway redeploys the API when connected to this repo.
+Push to `main` runs CI. **Railway** rebuilds web + API when connected to this repo. See [docs/DEPLOY_LIVE.md](docs/DEPLOY_LIVE.md) to point DNS from Netlify to Railway (no Netlify payment needed).
 
 **Railway production env (API):**
 
