@@ -1,0 +1,31 @@
+{
+  "name": "@secretlayer/promotion",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "secretlayer-promote": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test dist/**/*.test.js",
+    "lint": "node -e \"process.exit(0)\"",
+    "cli": "node dist/cli.js"
+  },
+  "dependencies": {
+    "@secretlayer/shared": "workspace:*",
+    "@secretlayer/safety-engine": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "typescript": "^5.8.3"
+  }
+}

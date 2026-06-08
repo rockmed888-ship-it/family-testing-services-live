@@ -1,0 +1,31 @@
+{
+  "name": "@secretlayer/api",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test dist/**/*.test.js",
+    "lint": "node -e \"process.exit(0)\""
+  },
+  "dependencies": {
+    "@secretlayer/promotion": "workspace:*",
+    "@secretlayer/safety-engine": "workspace:*",
+    "@secretlayer/shared": "workspace:*",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "pg": "^8.16.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.2",
+    "@types/pg": "^8.15.4",
+    "@types/node": "^22.15.21",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}
