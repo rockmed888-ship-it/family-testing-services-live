@@ -1,31 +1,29 @@
 # Deploy Family Testing Services on mirrorpathai.com
 
-## Live URL (after DNS is set)
+## Recommended: Netlify (you already host mirrorpathai.com there)
 
-**https://family.mirrorpathai.com**
+### Option A — Subdomain `family.mirrorpathai.com` (keeps Mirror Path AI on root)
 
-The root domain `mirrorpathai.com` keeps your Mirror Path AI app. The clinic site lives on the `family` subdomain.
+1. [Netlify](https://app.netlify.com) → **Add new site** → **Import from Git**
+2. Repo: `dustin497/SecretLayer` · Branch: `main`
+3. **Publish directory:** `family-testing-services`
+4. Deploy → **Domain settings** → **Add domain** → `family.mirrorpathai.com`
+5. Netlify adds the DNS record automatically (same account as mirrorpathai.com).
 
-## One-time DNS step (Netlify DNS for mirrorpathai.com)
+### Option B — Root domain `mirrorpathai.com` (replaces Mirror Path AI)
 
-1. Open [Netlify](https://app.netlify.com) → your **mirrorpathai.com** site → **Domain management** → **DNS**
-2. Add record:
+1. Open your existing **mirrorpathai.com** site in Netlify
+2. **Site configuration** → Link to `dustin497/SecretLayer` repo
+3. **Publish directory:** `family-testing-services`
+4. Redeploy
 
-| Type  | Name   | Value                 |
-|-------|--------|-----------------------|
-| CNAME | family | dustin497.github.io   |
+---
 
-3. Wait 5–15 minutes for DNS to propagate.
+## Alternative: GitHub Pages
 
-## GitHub Pages
+1. GitHub → `dustin497/SecretLayer` → **Settings → Pages**
+2. **Build and deployment → Source:** GitHub Actions
+3. Netlify DNS → add CNAME: `family` → `dustin497.github.io`
+4. Re-run **Deploy Family Testing Services** workflow
 
-This repo deploys `family-testing-services/` automatically on push to `main` via the **Deploy Family Testing Services** workflow.
-
-Enable once in GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-
-## Use the root domain instead (optional)
-
-If you want the clinic on `mirrorpathai.com` instead of Mirror Path AI:
-
-1. Change `family-testing-services/CNAME` to `mirrorpathai.com`
-2. In Netlify DNS, point the apex domain to GitHub Pages (or deploy this folder as the main Netlify publish directory).
+Live URL: **https://family.mirrorpathai.com**
