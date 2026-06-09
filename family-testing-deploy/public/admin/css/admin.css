@@ -1,0 +1,170 @@
+:root {
+  --teal: #2a9d8f;
+  --teal-dark: #1d6f65;
+  --navy: #264653;
+  --cream: #faf8f5;
+  --coral: #e76f51;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--navy);
+  min-height: 100vh;
+}
+
+.admin-wrap {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem;
+}
+
+.admin-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(38, 70, 83, 0.12);
+  padding: 2rem;
+}
+
+.admin-brand {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.admin-brand img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  margin: 0 auto 0.75rem;
+}
+
+.admin-brand h1 {
+  font-family: Georgia, serif;
+  font-size: 1.35rem;
+}
+
+.admin-brand p {
+  font-size: 0.9rem;
+  color: #5c6d74;
+  margin-top: 0.35rem;
+}
+
+.admin-card label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.admin-card input[type="password"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #c5d5d2;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.admin-card button,
+.doc-link {
+  display: block;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: none;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #fff;
+  color: var(--teal-dark);
+  border: 2px solid var(--teal);
+  margin-top: 0.75rem;
+}
+
+.error {
+  color: #c0392b;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  display: none;
+}
+
+.error.show {
+  display: block;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.admin-header h2 {
+  font-family: Georgia, serif;
+  font-size: 1.25rem;
+}
+
+.logout-btn {
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.doc-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.doc-link {
+  background: #f4f8f7;
+  border: 2px solid rgba(42, 157, 143, 0.25);
+  color: var(--navy);
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: left;
+}
+
+.doc-link:hover {
+  border-color: var(--teal);
+  background: #e8f4f2;
+}
+
+.doc-link strong {
+  display: block;
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem;
+}
+
+.doc-link span {
+  font-size: 0.85rem;
+  color: #5c6d74;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: #888;
+  text-align: center;
+  margin-top: 1.25rem;
+}

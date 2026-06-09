@@ -10,3 +10,5 @@ coverage
 .DS_Store
 data/
 family-testing-services-godaddy-upload.zip
+family-testing-deploy.zip
+family-testing-deploy/node_modules/

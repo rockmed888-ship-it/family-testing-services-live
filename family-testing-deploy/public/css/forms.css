@@ -1,0 +1,370 @@
+/* Printable nail testing forms — screen + print */
+
+.form-page-body {
+  background: #e8ecef;
+  padding: 1.5rem;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: #1a1a1a;
+}
+
+.form-toolbar {
+  max-width: 8.5in;
+  margin: 0 auto 1rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.form-toolbar a,
+.form-toolbar button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  font-weight: 600;
+}
+
+.form-toolbar .btn-print {
+  background: #2a9d8f;
+  color: #fff;
+}
+
+.form-toolbar .btn-back {
+  background: #fff;
+  color: #264653;
+  border: 1px solid #ccc;
+}
+
+.form-sheet {
+  max-width: 8.5in;
+  margin: 0 auto;
+  background: #fff;
+  padding: 0.55in 0.6in;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  font-size: 10.5pt;
+  line-height: 1.45;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  border-bottom: 3px solid #2a9d8f;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.form-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.form-header-brand img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+
+.form-header-brand h1 {
+  font-family: Georgia, serif;
+  font-size: 15pt;
+  color: #264653;
+  line-height: 1.2;
+}
+
+.form-header-brand p {
+  font-size: 8.5pt;
+  color: #5c6d74;
+  margin-top: 0.15rem;
+}
+
+.form-barcode-block {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.form-barcode-block .barcode-label {
+  font-size: 7.5pt;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.2rem;
+}
+
+.barcode {
+  display: inline-block;
+}
+
+.barcode svg {
+  height: 42px;
+  width: auto;
+}
+
+.barcode-num {
+  font-family: "Courier New", monospace;
+  font-size: 9pt;
+  letter-spacing: 2px;
+  margin-top: 0.15rem;
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.form-title h2 {
+  font-family: Georgia, serif;
+  font-size: 13pt;
+  color: #1d6f65;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.form-title p {
+  font-size: 9pt;
+  color: #5c6d74;
+}
+
+.form-section {
+  margin-bottom: 0.85rem;
+  border: 1px solid #c5d5d2;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.form-section-title {
+  background: #e8f4f2;
+  padding: 0.35rem 0.6rem;
+  font-size: 9pt;
+  font-weight: 700;
+  color: #1d6f65;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid #c5d5d2;
+}
+
+.form-section-body {
+  padding: 0.55rem 0.65rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.form-row:last-child {
+  margin-bottom: 0;
+}
+
+.form-field {
+  flex: 1;
+  min-width: 140px;
+}
+
+.form-field label {
+  display: block;
+  font-size: 8pt;
+  color: #5c6d74;
+  margin-bottom: 0.15rem;
+  font-weight: 600;
+}
+
+.form-field .blank {
+  border-bottom: 1px solid #333;
+  min-height: 1.35rem;
+  padding: 0.1rem 0;
+}
+
+.form-field .blank.tall {
+  min-height: 2.5rem;
+}
+
+.form-check-row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.35rem;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 9.5pt;
+}
+
+.form-check .box {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid #333;
+  flex-shrink: 0;
+}
+
+.form-notice {
+  background: #fff8e6;
+  border: 1px solid #e6c84a;
+  border-radius: 4px;
+  padding: 0.5rem 0.65rem;
+  font-size: 9pt;
+  margin-bottom: 0.85rem;
+}
+
+.form-notice strong {
+  color: #8a6d00;
+}
+
+.shipping-track {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
+}
+
+.shipping-arrow {
+  font-size: 14pt;
+  color: #2a9d8f;
+}
+
+.lab-destination {
+  background: #f4f8f7;
+  border: 1px dashed #2a9d8f;
+  padding: 0.5rem 0.65rem;
+  border-radius: 4px;
+  font-size: 9pt;
+}
+
+.turnaround-box {
+  background: #264653;
+  color: #fff;
+  padding: 0.45rem 0.75rem;
+  border-radius: 4px;
+  font-size: 9pt;
+  text-align: center;
+}
+
+.turnaround-box strong {
+  color: #f4a261;
+  font-size: 10.5pt;
+}
+
+.form-sig-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.sig-line {
+  border-bottom: 1px solid #333;
+  min-height: 1.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.sig-label {
+  font-size: 8pt;
+  color: #666;
+}
+
+.form-footer {
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #ddd;
+  font-size: 7.5pt;
+  color: #888;
+  text-align: center;
+}
+
+/* Results page */
+.results-banner {
+  text-align: center;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.results-banner.clean {
+  background: #e6f4ea;
+  border: 2px solid #34a853;
+}
+
+.results-banner h2 {
+  font-family: Georgia, serif;
+  font-size: 16pt;
+  color: #1e7e34;
+  letter-spacing: 0.08em;
+}
+
+.results-banner p {
+  font-size: 9.5pt;
+  color: #2d6a3e;
+  margin-top: 0.25rem;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9.5pt;
+  margin: 0.75rem 0;
+}
+
+.results-table th,
+.results-table td {
+  border: 1px solid #bbb;
+  padding: 0.35rem 0.5rem;
+  text-align: left;
+}
+
+.results-table th {
+  background: #e8f4f2;
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  color: #1d6f65;
+}
+
+.results-table .neg {
+  color: #1e7e34;
+  font-weight: 700;
+}
+
+.results-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.cert-stamp {
+  border: 2px solid #2a9d8f;
+  border-radius: 4px;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 8.5pt;
+  color: #1d6f65;
+  margin-top: 0.75rem;
+}
+
+@media print {
+  .form-page-body {
+    background: #fff;
+    padding: 0;
+  }
+
+  .form-toolbar {
+    display: none;
+  }
+
+  .form-sheet {
+    box-shadow: none;
+    max-width: none;
+    padding: 0.4in;
+  }
+}

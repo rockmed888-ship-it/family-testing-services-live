@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Family Testing Services logo">
+  <defs>
+    <linearGradient id="teal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a9d8f"/>
+      <stop offset="100%" stop-color="#1d6f65"/>
+    </linearGradient>
+    <linearGradient id="coral" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f4a261"/>
+      <stop offset="100%" stop-color="#e76f51"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="92" fill="url(#teal)" opacity="0.12"/>
+  <circle cx="100" cy="100" r="72" fill="url(#teal)"/>
+  <path d="M100 52 C78 72 62 88 62 108 C62 124 76 136 92 136 C96 136 100 134 100 130 C100 134 104 136 108 136 C124 136 138 124 138 108 C138 88 122 72 100 52Z" fill="url(#coral)"/>
+  <path d="M72 118 C68 122 66 128 68 134 C70 140 78 142 84 138" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M128 118 C132 122 134 128 132 134 C130 140 122 142 116 138" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <text x="100" y="178" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#264653" font-weight="600">Family Testing Services</text>
+</svg>
