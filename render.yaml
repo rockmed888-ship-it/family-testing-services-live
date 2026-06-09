@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: family-testing-services
+    runtime: node
+    rootDir: family-testing-deploy
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
