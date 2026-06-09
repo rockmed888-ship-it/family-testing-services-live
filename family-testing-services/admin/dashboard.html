@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Staff Documents | Family Testing Services</title>
+  <link rel="icon" href="../images/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="admin-wrap" style="max-width: 640px;">
+    <div class="admin-card">
+      <div class="admin-header">
+        <h2>Printable Documents</h2>
+        <button type="button" class="logout-btn" onclick="FTSAdmin.logout()">Sign Out</button>
+      </div>
+      <p style="color: #5c6d74; font-size: 0.95rem; margin-bottom: 0.5rem;">
+        Open a document, fill in blanks as needed, then use <strong>Print</strong>.
+      </p>
+      <div class="doc-list">
+        <a href="documents/proof-of-testing.html" class="doc-link">
+          <strong>Proof of Testing — Chain of Custody</strong>
+          <span>Nail keratin specimen collection form with wash record, barcodes, and lab shipping. Use when a test is conducted.</span>
+        </a>
+        <a href="documents/test-results-negative.html" class="doc-link">
+          <strong>Test Results — Negative / Clean</strong>
+          <span>14-panel negative results report with date and conducted-by blanks. Separate printable document.</span>
+        </a>
+      </div>
+      <a href="../index.html" class="btn-secondary" style="margin-top: 1.5rem;">← Back to Public Website</a>
+    </div>
+  </div>
+  <script src="js/auth.js"></script>
+  <script>
+    FTSAdmin.requireAuth("index.html");
+  </script>
+</body>
+</html>

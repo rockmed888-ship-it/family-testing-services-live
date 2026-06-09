@@ -7,13 +7,4 @@
   NPM_CONFIG_FUND = "false"
   NPM_CONFIG_AUDIT = "false"
 
-[[redirects]]
-  from = "/api/*"
-  to = "https://api.secretlayer.net/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# Static multi-page site — no SPA fallback (preserves .html pages and /admin/)
