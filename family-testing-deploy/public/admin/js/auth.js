@@ -24,11 +24,5 @@
       }
       return true;
     },
-    getPassword() {
-      return ADMIN_PASSWORD;
-    },
-    authHeaders() {
-      return { "x-admin-password": ADMIN_PASSWORD };
-    }
   };
 })();
