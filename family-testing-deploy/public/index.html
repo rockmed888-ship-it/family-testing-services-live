@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Family Testing Services — compassionate drug and alcohol testing in Bessemer, Alabama. A trusted local clinic serving families with dignity for over 15 years. Call (205) 579-0707 to schedule.">
+  <meta name="description" content="Family Testing Services — compassionate drug and alcohol testing in Bessemer, Alabama. A trusted local clinic serving families with dignity for over 15 years. Walk-ins welcome during business hours.">
   <title>Family Testing Services | Compassionate Drug Testing in Bessemer, AL</title>
   <link rel="icon" href="images/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/styles.css">
@@ -20,10 +20,10 @@
         </div>
       </a>
       <div class="header-cta">
-        <a href="tel:2055790707" class="phone-link" aria-label="Call us at 205-579-0707">
-          <span aria-hidden="true">📞</span> (205) 579-0707
-        </a>
-        <a href="tel:2055790707" class="btn btn-primary">Schedule Appointment</a>
+        <span class="phone-link no-phone" aria-label="Phone calls disabled; use online or in-person scheduling">
+          <span aria-hidden="true">📋</span> Online scheduling only
+        </span>
+        <a href="#contact" class="btn btn-primary">Scheduling Info</a>
       </div>
     </div>
     <nav class="main-nav" aria-label="Main navigation">
@@ -49,7 +49,7 @@
         <h2>Compassionate Drug &amp; Alcohol Testing You Can Trust</h2>
         <p>At Family Testing Services, we understand that behind every test is a person — a parent, a child, a loved one hoping for a better tomorrow. For over fifteen years we've provided confidential drug and alcohol testing with dignity, warmth, and zero judgment. We're here to walk beside you.</p>
         <div class="hero-actions">
-          <a href="tel:2055790707" class="btn btn-coral">Call Today — (205) 579-0707</a>
+          <a href="#contact" class="btn btn-coral">View Scheduling Info</a>
           <a href="about.html" class="btn btn-secondary">Our Story</a>
         </div>
       </div>
@@ -321,7 +321,7 @@
       <div class="container">
         <div class="section-header">
           <h2>Visit Us in Bessemer</h2>
-          <p>Walk-ins welcome. Call today and schedule your appointment — we're ready to help your family.</p>
+          <p>Walk-ins welcome during business hours — we're ready to help your family.</p>
         </div>
         <div class="info-cards">
           <div class="info-card">
@@ -334,11 +334,11 @@
             </p>
           </div>
           <div class="info-card">
-            <h3>📞 Call to Schedule</h3>
+            <h3>📋 Scheduling</h3>
             <p>
-              <a href="tel:2055790707" style="font-size: 1.35rem; font-weight: 700; color: var(--teal-dark);">(205) 579-0707</a>
+              <strong style="font-size: 1.35rem; color: var(--teal-dark);">Online scheduling only</strong>
             </p>
-            <p style="margin-top: 0.75rem;">Call today and schedule your appointment. Same-day testing available.</p>
+            <p style="margin-top: 0.75rem;">No public phone line is active on this website. Same-day testing information is available on site or in person.</p>
           </div>
           <div class="info-card">
             <h3>🕐 Office Hours</h3>
@@ -357,8 +357,27 @@
       <div class="container">
         <h2>Your Family Deserves Compassionate Care</h2>
         <p>Whether it's your first test or your hundredth — we'll treat you with the dignity and respect you deserve.</p>
-        <a href="tel:2055790707" class="phone-big">(205) 579-0707</a>
-        <a href="tel:2055790707" class="btn btn-coral">Call Today &amp; Schedule Your Appointment</a>
+        <span class="phone-big no-phone">Online scheduling only</span>
+        <a href="#contact" class="btn btn-coral">View Scheduling Info</a>
+      </div>
+    </section>
+
+
+    <section id="verify-record" class="section verify-section" aria-label="Verify saved drug screen collection record">
+      <div class="container">
+        <div class="section-header">
+          <h2>Verify Drug Test Key</h2>
+          <p>Enter a verification key or specimen ID to confirm that a specimen collection record was saved by this website.</p>
+        </div>
+        <form id="verify-form" class="verify-form">
+          <label for="verify-key">Verification Key or Specimen ID</label>
+          <div class="verify-row">
+            <input id="verify-key" name="verify-key" type="text" placeholder="VERIFY-260709-ABC123 or FTS-NK-260709-ABCDE" autocomplete="off">
+            <button type="submit" class="btn btn-primary">Verify Key</button>
+          </div>
+          <p class="verify-note">Verification confirms a saved collection record only. It does not confirm laboratory results, negative status, or legal acceptance.</p>
+        </form>
+        <div id="verify-result" class="verify-result" role="status" aria-live="polite"></div>
       </div>
     </section>
   </main>
@@ -382,9 +401,9 @@
         </ul>
       </div>
       <div class="footer-links">
-        <h4>Contact</h4>
+        <h4>Visit / Scheduling</h4>
         <ul>
-          <li><a href="tel:2055790707">(205) 579-0707</a></li>
+          <li>Online scheduling only</li>
           <li>1801 2nd Ave N, Ste 204</li>
           <li>Bessemer, AL 35020</li>
         </ul>
@@ -398,7 +417,7 @@
   <div id="review-modal" class="modal-overlay" role="dialog" aria-labelledby="modal-title" aria-modal="true">
     <div class="modal">
       <h3 id="modal-title">Thank You for Wanting to Share!</h3>
-      <p>Our online review system is being updated to serve you better. In the meantime, we'd love to hear from you directly — give us a call at <strong>(205) 579-0707</strong> or tell us in person at your next visit. Your words mean the world to our family.</p>
+      <p>Our online review system is being updated to serve you better. In the meantime, we'd love to hear from you directly — tell us in person at your next visit. Your words mean the world to our family.</p>
       <button id="modal-close" class="btn btn-primary" type="button">Close</button>
     </div>
   </div>
