@@ -168,3 +168,92 @@ body {
   text-align: center;
   margin-top: 1.25rem;
 }
+
+.records-wrap {
+  max-width: 1100px;
+}
+
+.records-card {
+  max-width: none;
+}
+
+.records-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #d7e4e1;
+  border-radius: 8px;
+}
+
+.records-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.records-table th,
+.records-table td {
+  border-bottom: 1px solid #e2ecea;
+  padding: 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.records-table th {
+  background: #e8f4f2;
+  color: #1d6f65;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.records-table small {
+  color: #5c6d74;
+}
+
+.records-toolbar-note {
+  background: #f4f8f7;
+  border: 1px solid #d7e4e1;
+  border-radius: 8px;
+  color: #264653;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+}
+
+.error-text {
+  color: #9f1d1d;
+  font-weight: 700;
+}
+
+.subtle { margin-top: .25rem; color: #5c6d74; font-size: .88rem; }
+.compliance-alert {
+  margin-bottom: 1rem;
+  padding: .85rem 1rem;
+  color: #5c4100;
+  background: #fff8df;
+  border: 1px solid #e6ca67;
+  border-left: 5px solid #c18b00;
+  border-radius: 9px;
+  line-height: 1.45;
+}
+.primary-doc-link { border-color: var(--teal); background: #e8f4f2; }
+.records-actions { display: grid; grid-template-columns: auto 1fr; align-items: end; gap: 1rem; margin-bottom: 1rem; }
+.compact-button { display: inline-flex !important; width: auto !important; align-items: center; justify-content: center; white-space: nowrap; }
+.record-search-form label { display: block; margin-bottom: .35rem; font-size: .82rem; font-weight: 700; }
+.record-search-form > div { display: flex; gap: .45rem; }
+.record-search-form input { flex: 1; min-width: 180px; padding: .65rem .75rem; border: 1px solid #b8c9c6; border-radius: 8px; }
+.record-search-form button { width: auto; padding: .62rem .85rem; border-radius: 8px; background: #f4f8f7; color: var(--navy); border: 1px solid #b8c9c6; }
+.record-status { display: inline-block; max-width: 250px; padding: .25rem .45rem; border-radius: 999px; font-size: .76rem; font-weight: 750; line-height: 1.2; }
+.status-pending { color: #384e57; background: #edf2f4; }
+.status-screen_negative, .status-negative { color: #155c37; background: #eaf6ee; }
+.status-presumptive_positive { color: #7a4500; background: #fff4d8; }
+.status-confirmed_positive { color: #7d1815; background: #fdebea; }
+.status-invalid, .status-cancelled, .status-rejected, .status-refusal { color: #53351a; background: #f4ece4; }
+.record-row-actions { white-space: nowrap; }
+.record-row-actions a { display: inline-block; margin: 0 .35rem .25rem 0; color: var(--teal-dark); font-weight: 700; }
+
+@media (max-width: 760px) {
+  .admin-card { padding: 1.2rem; }
+  .records-actions { grid-template-columns: 1fr; }
+  .compact-button { width: 100% !important; }
+  .record-search-form > div { flex-wrap: wrap; }
+  .record-search-form input { flex-basis: 100%; }
+}

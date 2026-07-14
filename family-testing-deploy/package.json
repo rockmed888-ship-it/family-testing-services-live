@@ -1,17 +1,18 @@
 {
   "name": "family-testing-services",
-  "version": "1.0.0",
-  "description": "Family Testing Services — drug testing clinic website, Bessemer AL",
+  "version": "2.0.0",
+  "description": "Family Testing Services non-DOT drug testing collection, result, verification, and print workflow",
   "main": "server.js",
   "private": true,
   "scripts": {
-    "build": "echo build complete",
+    "build": "node --check server.js && node --check public/admin/js/auth.js && node --check public/admin/js/drug-screen-form.js && node --check public/admin/js/print-test.js && node --check public/admin/js/records.js && node --check public/js/main.js",
+    "test": "node --test test/*.test.js",
     "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.21.2"
   },
   "engines": {
-    "node": "20.x"
+    "node": ">=20 <23"
   }
 }

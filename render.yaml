@@ -2,10 +2,27 @@ services:
   - type: web
     name: family-testing-services
     runtime: node
+    plan: starter
+    region: ohio
     rootDir: family-testing-deploy
-    buildCommand: npm install && npm run build
+    buildCommand: npm ci && npm run build
     startCommand: npm start
     healthCheckPath: /health
+    autoDeployTrigger: commit
+    disk:
+      name: family-testing-records
+      mountPath: /var/data
+      sizeGB: 1
     envVars:
       - key: NODE_ENV
         value: production
+      - key: DATA_DIR
+        value: /var/data
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DATA_ENCRYPTION_KEY
+        generateValue: true
+      - key: SESSION_HOURS
+        value: "8"

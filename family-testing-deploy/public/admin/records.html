@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Saved Drug Test Records | Family Testing Services</title>
+  <link rel="icon" href="../images/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="admin-wrap records-wrap">
+    <div class="admin-card records-card">
+      <div class="admin-header">
+        <div>
+          <h2>Saved Drug Test Records</h2>
+          <p class="subtle">Edit or print the exact version stored by the server</p>
+        </div>
+        <button type="button" class="logout-btn" onclick="FTSAdmin.logout()">Sign Out</button>
+      </div>
+
+      <div class="records-actions">
+        <a href="documents/proof-of-testing.html" class="btn-primary compact-button">+ New Test Record</a>
+        <form id="record-search-form" class="record-search-form">
+          <label for="record-search">Search records</label>
+          <div>
+            <input id="record-search" type="search" placeholder="Reference, donor, specimen, client, or lab number">
+            <button type="submit">Search</button>
+            <button id="clear-search" type="button">Clear</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="records-output" aria-live="polite"></div>
+      <a href="dashboard.html" class="btn-secondary" style="margin-top: 1.5rem;">← Back to Dashboard</a>
+    </div>
+  </div>
+  <script src="js/auth.js"></script>
+  <script src="js/records.js"></script>
+</body>
+</html>
